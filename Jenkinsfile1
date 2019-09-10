@@ -1,0 +1,36 @@
+
+pipeline {
+        agent any
+
+        stages {
+            stage('Checkout') {
+                steps {
+                                checkout scm                            }
+                    }
+                stage('Build') {
+                steps {
+                                sh ('/usr/share/maven/bin/mvn install')
+                }
+                }
+                stage('Deployment') {
+                      steps {
+                            sh 'sshpass -p "123" scp target/gamutkart.war satya@172.17.0.2:/home/satya/distros/apache-tomcat-8.5.39/webapps'                    }
+                 }
+                 stage('Startup') {
+                        steps {
+                           sh 'sshpass -p "123" ssh -o StrictHostKeyChecking=no satya@172.17.0.2 JAVA_HOME=/home/satya/distros/jdk1.8.0_201 /home/satya/distros/apache-tomcat-8.5.39/bin/startup.sh'
+                 }
+                 }
+                 stage('Email Notification') {
+
+                     
+                         mail bcc: '', body: '''welcome to jenkins job
+                        thanks
+                        siva''', cc: '', from: '', replyTo: '', subject: 'pipeline job', to: 'metlasivakiran@gmail.com'
+                 }
+
+                  
+                 }
+           }
+
+
