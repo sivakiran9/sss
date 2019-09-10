@@ -22,7 +22,7 @@ pipeline {
                  }
                  }
                  stage('Email Notification') {
-                        steps {
+                       
                        
                          mail bcc: '', body: '''welcome to jenkins job
                         thanks
@@ -33,4 +33,4 @@ pipeline {
                  }
            }
 
-    }
+    
