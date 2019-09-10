@@ -9,7 +9,7 @@ pipeline {
                     }
                 stage('Build') {
                 steps {
-                                sh ('/usr/share/maven/bin/mvn install')
+                                sh ('/usr/share/maven/bin/clean install')
                 }
                 }
                 stage('Deployment') {
